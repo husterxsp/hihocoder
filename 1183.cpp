@@ -1,4 +1,8 @@
-连通性一·割边与割点, Tarjan 算法
+连通性一·割边与割点, tarjan 算法
+
+dfn[u] 为深度优先搜索序数
+low[u] 为u及其后代所能连回的最早的祖先的dfn值
+
 参考《算法竞赛入门经典》
 
 #include <iostream>
@@ -21,7 +25,7 @@ vector<vector<int>> graph(20001);
 set<vector<int>, compare> edge;
 set<int> vertex;
 
-void tarjan(int u,int parent){
+void dfs(int u, int parent) {
     dfn[u] = low[u] = num++;
 
     int child = 0;
@@ -30,7 +34,7 @@ void tarjan(int u,int parent){
 
         if (!dfn[v]) {
             child++;
-            tarjan(v, u);
+            dfs(v, u);
 
             low[u] = min(low[u], low[v]);
 
@@ -68,7 +72,7 @@ int main(){
         graph[v].push_back(u);
     }
 
-    tarjan(1,0);
+    dfs(1,0);
 
     if (vertex.empty()) cout << "Null" << endl;
     else {
